@@ -16,8 +16,12 @@ export const handleLogin = async(data:LoginFormValues) => {
     return res
 }
 
-export const uploadImages = async(data:securedImages[]) => {
-    const res = await Api.post(endpoints.upload , {data});
+export const uploadImages = async(data:securedImages[] , token:string | undefined) => {
+    const res = await Api.post(endpoints.upload, { data }, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
     return res
 }
 

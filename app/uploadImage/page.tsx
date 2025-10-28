@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";import { useState } from "react";
 import { Progress } from "@/components/ui/progress"
+import Cookies from "js-cookie";
 import { ToastContainer,toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import {
@@ -156,8 +157,8 @@ const handleUpload = async () => {
       console.error("Upload failed for:", item.file.name, err);
     }
   }
-
-  const res = await uploadImages(uploadedImages);
+  const token = Cookies.get("authToken");
+  const res = await uploadImages(uploadedImages,token);
   if (res.data.success) {
     completedSteps++;
     const newProgress = Math.round((completedSteps / totalSteps) * 100);

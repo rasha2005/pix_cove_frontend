@@ -1,21 +1,27 @@
 "use client";
+export const dynamic = "force-dynamic";
+
 import { verifyEmail } from "@/app/lib/api";
 import { useSearchParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function VerifyEmailPage() {
   const params = useSearchParams();
-  const router = useRouter(); // ✅ Import router
+  const router = useRouter();
   const token = params.get("token");
   const [message, setMessage] = useState("Verifying your email...");
 
   useEffect(() => {
+    if (!token) {
+      setMessage("Invalid verification link.");
+      return;
+    }
+
     const verify = async () => {
       try {
         const res = await verifyEmail(token);
         setMessage(res.data.message);
 
-        // ✅ Redirect after 1.5 seconds (optional, gives time to display toast)
         setTimeout(() => {
           router.push("/login");
         }, 1500);

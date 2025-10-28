@@ -52,8 +52,11 @@ export const changePassword = async(current:string , confirm:string) => {
 }
 
 export const verifyEmail = async(token:string | null) => {
-    console.log("huhu")
     const res = await Api.get(`/user/verify-email?token=${token}`);
+    if(res.data.success === true) {
+        const token = res.data?.token;
+        setToken(token);
+    }
     return res;
   };
   

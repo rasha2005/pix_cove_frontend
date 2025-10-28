@@ -28,7 +28,10 @@ const navItems = [
   
 ];
 const handleLogout = () => {
-  Cookies.remove("authToken"); 
+  Cookies.remove("authToken", {
+    domain:process.env.NEXT_PUBLIC_BASE_URL_FRONT_URL,
+    path: "/",
+  });
   router.replace("/login"); 
 };
 

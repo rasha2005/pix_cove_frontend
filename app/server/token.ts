@@ -5,7 +5,7 @@ const isProduction:boolean = process.env.NODE_ENV === "production"
 function  setToken(authToken:string) {
     Cookies.set('authToken' , authToken,{
         path: '/', 
-        domain:'.pix-cove-frontend.vercel.app',
+        domain:process.env.NEXT_PUBLIC_BASE_URL_FRONT_URL,
         secure: true, 
         sameSite: isProduction ?'none' : 'lax'
     });

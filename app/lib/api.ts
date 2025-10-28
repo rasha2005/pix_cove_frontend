@@ -1,3 +1,4 @@
+import setToken from "../server/token"
 import { Api } from "./apiconfig"
 import { endpoints } from "./endpoints"
 
@@ -8,6 +9,10 @@ export const handleRegister = async(data:RegisterFormValues) => {
 
 export const handleLogin = async(data:LoginFormValues) => {
     const res = await Api.post(endpoints.login , {data});
+    if(res.data.success === true) {
+        const token = res.data?.token;
+        setToken(token);
+    }
     return res
 }
 

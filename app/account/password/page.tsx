@@ -2,7 +2,7 @@
 
 import { changePassword } from "@/app/lib/api";
 import { useState } from "react";
-
+import Cookies from "js-cookie";
 import { ToastContainer,toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -43,7 +43,8 @@ export default function Password() {
     }
 
     setError("");
-    const res = await changePassword(currentPassword , confirmPassword )
+    const token = Cookies.get("authToken");
+    const res = await changePassword(currentPassword , confirmPassword,token )
     if(res.data.success){
         toast.success(res.data.message)
         setCurrentPassword("")

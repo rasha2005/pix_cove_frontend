@@ -1,6 +1,7 @@
 'use client'
 import { useEffect, useState } from "react";
 import { deletImageById, editImageById, getImageById } from "../lib/api";
+import Cookies from "js-cookie";
 import {
   AlertDialog,
   AlertDialogTrigger,
@@ -35,12 +36,13 @@ export default function AccountPage() {
   const [isEditOpen, setIsEditOpen] = useState(false);
   const [imageId , setImageId] = useState<string | undefined>("")
   const [titleError, setTitleError] = useState("");
+  const token = Cookies.get("authToken");
 
 
 
 
   async function handleDelete(id:string | undefined){
-    const res = await deletImageById(id)
+    const res = await deletImageById(id,token)
     if(res.data.success){
       setImages(prev => prev.filter(img => img._id !== id));
       toast.success(res.data.message)
@@ -79,8 +81,7 @@ export default function AccountPage() {
         imageUrl = data.secure_url;
       }
   
-  
-      const res = await editImageById(id, editTitle ,imageUrl)
+      const res = await editImageById(id, editTitle ,imageUrl ,token)
       console.log("hehe",res)
       if (res.data.success) {
         setImages((prev) =>
@@ -103,7 +104,7 @@ export default function AccountPage() {
   
 
   async function getImageData(page = 1, limit = 10) {
-    const res = await getImageById(page, limit );
+    const res = await getImageById(page, limit , token );
     if (res.data.success) {
       setImages(res.data.data.images);   
       setTotalPages(res.data.data.totalPages);

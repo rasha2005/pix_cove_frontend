@@ -30,28 +30,46 @@ export const getAllImages = async() => {
     return res
 }
 
-export const getImageById = async(page:number , limit:number) => {
+export const getImageById = async(page:number , limit:number , token:string | undefined) => {
     const res = await Api.get(endpoints.userImages ,{
-        params: { page, limit }
+        params: { page, limit },
+        headers: {
+            Authorization: `Bearer ${token}`
+          }
     } );
     return res
 }
 
-export const deletImageById = async(imgId:string | undefined) => {
+export const deletImageById = async(imgId:string | undefined , token:string | undefined) => {
     const res = await Api.delete(endpoints.deleteImage ,{
-        params:{imgId}
+        params:{imgId},
+        headers: {
+            Authorization: `Bearer ${token}`
+          }
     } );
     return res
 }
 
-export const editImageById = async(imgId:string | undefined , title:string , img_url:string) => {
+export const editImageById = async(imgId:string | undefined , title:string , img_url:string,token:string | undefined) => {
     console.log(imgId , title, img_url)
-    const res = await Api.put(endpoints.editImage ,{imgId , title, img_url});
+    const res = await Api.put(endpoints.editImage ,{imgId , title, img_url},
+        {
+        headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
+    );
     return res
 }
 
-export const changePassword = async(current:string , confirm:string) => {
-    const res = await Api.put(endpoints.passwordReset ,{current , confirm,});
+export const changePassword = async(current:string , confirm:string , token:string | undefined) => {
+    const res = await Api.put(endpoints.passwordReset ,{current , confirm,},
+        {
+        headers: {
+            Authorization: `Bearer ${token}`
+         }
+        }
+    );
     return res
 }
 

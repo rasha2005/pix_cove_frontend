@@ -8,9 +8,9 @@ const publicPath = [
     '/verify-email'
 ]
 
-export async function proxy(request: NextRequest) {
+export async function middleware(request: NextRequest) {
     const path = request.nextUrl.pathname;
-
+console.log("bhahahahahha")
 
   const isPublicPath = publicPath.includes(path);  
 
